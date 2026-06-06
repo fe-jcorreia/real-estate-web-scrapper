@@ -11,20 +11,23 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf dist/",
-    "db:codegen": "prisma generate --schema schema.prisma",
+    "db:codegen": "prisma generate",
     "dev": "tsc --watch",
-    "migrate:deploy": "npm_config_yes=true dotenv -e test.env prisma migrate deploy --schema schema.prisma",
-    "migrate:generate": "dotenv -e test.env -- prisma migrate dev --schema schema.prisma",
-    "migrate:reset": "dotenv -e test.env -- prisma migrate reset --schema schema.prisma -f",
-    "migrate:sync": "dotenv -e test.env -- prisma db push --schema schema.prisma",
+    "migrate:deploy": "dotenv -e test.env -- prisma migrate deploy",
+    "migrate:generate": "dotenv -e test.env -- prisma migrate dev",
+    "migrate:reset": "dotenv -e test.env -- prisma migrate reset -f",
+    "migrate:sync": "dotenv -e test.env -- prisma db push",
     "postinstall": "npm run db:codegen"
   },
   "dependencies": {
     "nanoid": "5.0.9",
-    "@prisma/client": "6.9.0",
-    "prisma": "6.9.0"
+    "@prisma/client": "7.8.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "pg": "^8.13.0",
+    "prisma": "7.8.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.0",
     "dotenv-cli": "7.4.2",
     "typescript": "5.8.3"
   },

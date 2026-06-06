@@ -27,6 +27,9 @@ apps/*/dist/
 packages/*/dist/
 rest-server-pruned/
 
+# Prisma generated client
+packages/db/src/generated/
+
 # Crawler data
 data/raw-html/
 
