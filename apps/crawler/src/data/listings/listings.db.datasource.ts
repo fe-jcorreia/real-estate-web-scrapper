@@ -1,32 +1,35 @@
-import { dbClient, DatabaseIdGenerator } from '@repo/db';
+import { dbClient, DatabaseIdGenerator, type Prisma } from '@repo/db';
 import { ApplicationLayer, logger } from '@repo/core/log';
 import type { ListingInput } from '../../domain/model/listing.model.js';
 
 const log = { layer: ApplicationLayer.Data, method: 'listings' };
 
 export const ListingsDbDatasource = {
-  async upsert(input: ListingInput, scrapeJobId?: string) {
+  async upsert(input: ListingInput) {
     const externalId = DatabaseIdGenerator.generate('l_');
 
-    return dbClient.listingEntity.upsert({
+    const result = await dbClient.listingEntity.upsert({
       where: {
-        source_sourceId: {
+        listing_source_unique: {
           source: input.source,
-          sourceId: input.sourceId ?? input.sourceUrl,
+          sourceId: input.sourceId,
         },
       },
       create: {
         id: externalId,
-        sourceUrl: input.sourceUrl,
         source: input.source,
         sourceId: input.sourceId,
+        url: input.url,
         title: input.title,
         description: input.description,
         price: input.price,
-        area: input.area,
+        currency: input.currency,
+        propertyType: input.propertyType,
+        transactionType: input.transactionType,
+        areaSqm: input.areaSqm,
         bedrooms: input.bedrooms,
         bathrooms: input.bathrooms,
-        parkingSpaces: input.parkingSpaces,
+        parkingSpots: input.parkingSpots,
         address: input.address,
         neighborhood: input.neighborhood,
         city: input.city,
@@ -34,24 +37,38 @@ export const ListingsDbDatasource = {
         zipCode: input.zipCode,
         latitude: input.latitude,
         longitude: input.longitude,
-        propertyType: input.propertyType,
-        listingType: input.listingType,
-        rawData: input.rawData ?? undefined,
-        scrapeJobId,
+        rawData: input.rawData as Prisma.InputJsonValue | undefined,
       },
       update: {
-        lastSeenAt: new Date(),
-        price: input.price,
+        url: input.url,
         title: input.title,
         description: input.description,
-        rawData: input.rawData ?? undefined,
+        price: input.price,
+        currency: input.currency,
+        propertyType: input.propertyType,
+        transactionType: input.transactionType,
+        areaSqm: input.areaSqm,
+        bedrooms: input.bedrooms,
+        bathrooms: input.bathrooms,
+        parkingSpots: input.parkingSpots,
+        address: input.address,
+        neighborhood: input.neighborhood,
+        city: input.city,
+        state: input.state,
+        zipCode: input.zipCode,
+        latitude: input.latitude,
+        longitude: input.longitude,
+        rawData: input.rawData as Prisma.InputJsonValue | undefined,
       },
     });
+
+    logger.debug({ ...log, message: `Upserted listing ${result.id} (${input.source}/${input.sourceId})` });
+    return result;
   },
 
   async findBySourceId(source: string, sourceId: string) {
     return dbClient.listingEntity.findUnique({
-      where: { source_sourceId: { source, sourceId } },
+      where: { listing_source_unique: { source, sourceId } },
     });
   },
 

@@ -1,4 +1,4 @@
-import { dbClient, DatabaseIdGenerator } from '@repo/db';
+import { dbClient, DatabaseIdGenerator, type Prisma } from '@repo/db';
 import type { ScrapeJobInput, ScrapeJobUpdate } from '../../domain/model/scrape-job.model.js';
 
 export const ScrapeJobsDbDatasource = {
@@ -8,7 +8,6 @@ export const ScrapeJobsDbDatasource = {
       data: {
         id: externalId,
         source: input.source,
-        totalPages: input.totalPages ?? 0,
         status: 'pending',
       },
     });
@@ -17,7 +16,10 @@ export const ScrapeJobsDbDatasource = {
   async update(id: string, data: ScrapeJobUpdate) {
     return dbClient.scrapeJobEntity.update({
       where: { id },
-      data,
+      data: {
+        ...data,
+        errorLog: data.errorLog != null ? (data.errorLog as Prisma.InputJsonValue) : undefined,
+      },
     });
   },
 

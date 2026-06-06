@@ -10,12 +10,12 @@ export const SCRAPE_ERRORS = {
 
 export class ParseError extends DataSourceError {
   constructor(details?: unknown) {
-    super(SCRAPE_ERRORS.PARSE_ERROR.code, SCRAPE_ERRORS.PARSE_ERROR.message, details);
+    super({ ...SCRAPE_ERRORS.PARSE_ERROR, details });
   }
 }
 
 export class NavigationError extends DataSourceError {
   constructor(details?: unknown) {
-    super(SCRAPE_ERRORS.NAVIGATION_ERROR.code, SCRAPE_ERRORS.NAVIGATION_ERROR.message, details);
+    super({ ...SCRAPE_ERRORS.NAVIGATION_ERROR, details });
   }
 }

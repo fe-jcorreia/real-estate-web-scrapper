@@ -2,15 +2,16 @@ export type JobStatus = 'pending' | 'running' | 'completed' | 'failed';
 
 export interface ScrapeJobInput {
   source: string;
-  totalPages?: number;
 }
 
 export interface ScrapeJobUpdate {
   status?: JobStatus;
   pagesScraped?: number;
   listingsFound?: number;
-  listingsNew?: number;
-  errors?: unknown[];
+  listingsCreated?: number;
+  listingsUpdated?: number;
+  errors?: number;
+  errorLog?: Record<string, unknown> | null;
   startedAt?: Date;
   completedAt?: Date;
 }
