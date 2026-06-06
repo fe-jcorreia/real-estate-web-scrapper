@@ -1,15 +1,22 @@
-import { configureRoutes } from '@api/routes.config.js';
-import { Env } from '@env/index.js';
+import { configureRoutes } from './routes.config.js';
+import { Env } from '../env/index.js';
 import fastifyCompress from '@fastify/compress';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import fastifyRequestContextPlugin from '@fastify/request-context';
+import { ContextProvider } from '@repo/core/context';
 import { logger } from '@repo/core/log';
-import Fastify, { type FastifyInstance } from 'fastify';
+import Fastify, { type FastifyInstance, type FastifyRequest } from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-zod-openapi';
-import { createContext } from './context.config.js';
 import { parseGlobalError } from './middlewares/error.global-middleware.js';
 import { configureOpenApiDocs } from './open-api-docs.config.js';
+import type { ServerContext } from '../domain/model/context.model.js';
+
+function createContext(_req: FastifyRequest): ServerContext {
+  const context: ServerContext = { uuid: crypto.randomUUID() };
+  ContextProvider.getInstance<ServerContext>().enterWith(context);
+  return context;
+}
 
 export async function configureRestServer(): Promise<FastifyInstance> {
   const app = Fastify();

@@ -14,8 +14,8 @@ export async function configureOpenApiDocs(app: FastifyInstance) {
   await app.register(fastifySwagger, {
     openapi: {
       info: {
-        title: 'Template node',
-        description: 'A template for REST projects',
+        title: 'Real Estate Web Scrapper API',
+        description: 'API for querying scraped real estate data',
         version: '1.0.0',
       },
       openapi: '3.1.0' satisfies ZodOpenApiVersion,

@@ -1,9 +1,8 @@
-import type { ErrorBody } from '@api/common/common.schema.js';
-import { isValidationError, mapValidationErrors } from '@api/common/error.mapper.js';
-import type { ServerContext } from '@domain/model/context.model.js';
+import type { ErrorBody } from '../common/common.schema.js';
+import { isValidationError, mapValidationErrors } from '../common/error.mapper.js';
+import type { ServerContext } from '../../domain/model/context.model.js';
 import { ContextProvider } from '@repo/core/context';
 import { isBaseError } from '@repo/core/error';
-import { Localization } from '@repo/core/localization';
 import { logger } from '@repo/core/log';
 import type { FastifyReply } from 'fastify';
 
@@ -18,7 +17,7 @@ export function parseGlobalError(error: any, _, reply: FastifyReply) {
     status = error.status;
     errors.push({
       code: error.code,
-      message: Localization.__(error.message),
+      message: error.message,
       uuid,
       details: error.details,
     });
@@ -29,7 +28,7 @@ export function parseGlobalError(error: any, _, reply: FastifyReply) {
   } else {
     errors.push({
       code: 'GLB_01',
-      message: Localization.__('global.error.generic'),
+      message: 'Internal server error',
       uuid,
       details: error.message,
     });

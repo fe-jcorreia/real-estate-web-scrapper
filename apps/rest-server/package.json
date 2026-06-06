@@ -1,7 +1,7 @@
 {
   "name": "@repo/rest-server",
   "version": "1.0.0",
-  "description": "Taqtile's Template Server using Node and Typescript",
+  "description": "REST API for querying scraped real estate data",
   "scripts": {
     "build": "npm run clean && tsc && node esbuild.mjs",
     "clean": "rimraf dist/",

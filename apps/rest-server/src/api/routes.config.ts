@@ -1,13 +1,10 @@
-import type { ServerContext } from '@domain/model/context.model.js';
+import type { ServerContext } from '../domain/model/context.model.js';
 import { ContextProvider } from '@repo/core/context';
 import { ApplicationLayer, logger } from '@repo/core/log';
 import type { FastifyInstance } from 'fastify';
 import type { FastifyZodOpenApiTypeProvider } from 'fastify-zod-openapi';
-import { AuthRoutes } from './auth/auth.routes.js';
 import { errorsSchema } from './common/common.schema.js';
 import { ROUTES_METHODS, type RouteMethodHandler, type Routes, type RoutesHttpMethod } from './routes.js';
-import { SettingsRoutes } from './settings/settings.routes.js';
-import { UsersRoutes } from './users/users.routes.js';
 
 interface RegisterRouteParams {
   fastify: FastifyInstance;
@@ -15,7 +12,8 @@ interface RegisterRouteParams {
   route: RouteMethodHandler;
   routes: Routes;
 }
-const ROUTES_RESOURCES_TO_REGISTER = [AuthRoutes, UsersRoutes, SettingsRoutes];
+
+const ROUTES_RESOURCES_TO_REGISTER: Routes[] = [];
 
 export async function configureRoutes(fastify: FastifyInstance) {
   for (const routes of ROUTES_RESOURCES_TO_REGISTER) {
