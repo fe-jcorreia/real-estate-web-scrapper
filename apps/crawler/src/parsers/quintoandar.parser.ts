@@ -45,7 +45,7 @@ function buildListingUrl(href: string): string {
   return `https://www.quintoandar.com.br${href}`;
 }
 
-export function createQuintoAndarParser(defaultTransaction: TransactionType): SiteParser {
+export function createQuintoAndarParser(_defaultTransaction: TransactionType): SiteParser {
   return {
     source: 'quintoandar',
     baseUrl: 'https://www.quintoandar.com.br',
@@ -107,9 +107,9 @@ export function createQuintoAndarParser(defaultTransaction: TransactionType): Si
       return uniqueListings;
     },
 
-    buildSearchUrl(page: number, params?: Record<string, string>): string {
-      const transaction = params?.['transaction'] === 'sale' ? 'comprar' : 'alugar';
-      const neighborhood = params?.['neighborhood'] ?? '';
+    buildSearchUrl(_page: number, params?: Record<string, string>): string {
+      const transaction = params?.transaction === 'sale' ? 'comprar' : 'alugar';
+      const neighborhood = params?.neighborhood ?? '';
       if (neighborhood) {
         return `https://www.quintoandar.com.br/${transaction}/imovel/sao-paulo-sp-brasil/bairro-${neighborhood}`;
       }
