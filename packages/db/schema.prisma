@@ -7,16 +7,85 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserEntity {
-  id         String    @unique @map("external_id")
-  internalId Int       @id @default(autoincrement()) @map("id")
-  email      String    @unique @db.VarChar
-  name       String    @db.VarChar
-  password   String?   @db.VarChar
-  salt       String    @db.VarChar
-  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt  DateTime  @default(now()) @map("updated_at") @db.Timestamp(6)
-  deletedAt  DateTime? @map("deleted_at") @db.Timestamp(6)
+model ListingEntity {
+  id         String   @unique @map("external_id")
+  internalId Int      @id @default(autoincrement()) @map("id")
+  source     String   @db.VarChar(50)
+  sourceId   String   @map("source_id") @db.VarChar(100)
+  url        String   @db.VarChar(2048)
 
-  @@map("user")
+  title       String  @db.VarChar(500)
+  description String? @db.Text
+  price       Float?
+  currency    String? @db.VarChar(10)
+
+  propertyType    String? @map("property_type") @db.VarChar(50)
+  transactionType String? @map("transaction_type") @db.VarChar(20)
+
+  areaSqm     Float? @map("area_sqm")
+  bedrooms    Int?
+  bathrooms   Int?
+  parkingSpots Int?  @map("parking_spots")
+
+  address      String? @db.VarChar(500)
+  neighborhood String? @db.VarChar(200)
+  city         String? @db.VarChar(200)
+  state        String? @db.VarChar(100)
+  zipCode      String? @map("zip_code") @db.VarChar(20)
+  latitude     Float?
+  longitude    Float?
+
+  rawData Json? @map("raw_data")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([source, sourceId], name: "listing_source_unique")
+  @@index([city, neighborhood])
+  @@index([source])
+  @@map("listing")
+}
+
+model ScrapeJobEntity {
+  id         String   @unique @map("external_id")
+  internalId Int      @id @default(autoincrement()) @map("id")
+  source     String   @db.VarChar(50)
+  status     String   @default("pending") @db.VarChar(20)
+
+  pagesScraped    Int @default(0) @map("pages_scraped")
+  listingsFound   Int @default(0) @map("listings_found")
+  listingsCreated Int @default(0) @map("listings_created")
+  listingsUpdated Int @default(0) @map("listings_updated")
+  errors          Int @default(0)
+
+  errorLog Json? @map("error_log")
+
+  startedAt   DateTime? @map("started_at") @db.Timestamp(6)
+  completedAt DateTime? @map("completed_at") @db.Timestamp(6)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  rawPages RawPageEntity[]
+
+  @@index([source])
+  @@index([status])
+  @@map("scrape_job")
+}
+
+model RawPageEntity {
+  id         String   @unique @map("external_id")
+  internalId Int      @id @default(autoincrement()) @map("id")
+
+  jobId      String   @map("job_id")
+  job        ScrapeJobEntity @relation(fields: [jobId], references: [id])
+
+  url        String   @db.VarChar(2048)
+  filePath   String   @map("file_path") @db.VarChar(1000)
+  httpStatus Int?     @map("http_status")
+  pageNumber Int      @map("page_number")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([jobId])
+  @@map("raw_page")
 }
