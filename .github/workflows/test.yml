@@ -3,9 +3,7 @@ on:
   pull_request:
     branches:
       - main
-      - develop
-      - "release/**"
-      - main-v4
+      - master
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -30,14 +28,14 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Setting database
-        run: docker compose up -d && sleep 10
+      - name: Start database
+        run: docker compose up -d --wait
 
       - name: Syncpack
         run: npm run packages:check
 
-      - name: Migrate test DB
-        run: npm run migrate:generate --skip-generate
+      - name: Run migrations
+        run: npm run migrate:deploy
 
-      - name: Running tests
+      - name: Run tests
         run: npm run test

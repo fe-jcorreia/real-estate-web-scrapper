@@ -26,7 +26,9 @@ node_modules
 apps/*/dist/
 packages/*/dist/
 rest-server-pruned/
-graphql-server-pruned/
+
+# Crawler data
+data/raw-html/
 
 # Env files
 apps/*/.env

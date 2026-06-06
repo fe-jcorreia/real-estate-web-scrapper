@@ -14,6 +14,7 @@
     "migrate:reset": "turbo run migrate:reset",
     "migrate:sync": "turbo run migrate:sync",
     "packages:check": "syncpack list-mismatches",
+    "crawl": "npm run start --workspace=@repo/crawler",
     "prune:rest-server": "rm -rf ./rest-server-pruned && turbo prune @repo/rest-server --docker --out-dir=rest-server-pruned",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck"
@@ -26,7 +27,7 @@
     "turbo": "2.0.12"
   },
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=22.0.0",
     "npm": ">=10.0.0"
   },
   "packageManager": "npm@10.8.2",
