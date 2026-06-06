@@ -1,21 +1,36 @@
-import { chromium, type Browser, type Page } from 'playwright';
+import { chromium, type Browser, type BrowserContext, type Page } from 'playwright';
 import { ApplicationLayer, logger } from '@repo/core/log';
 import { Env } from '../../env/index.js';
+import { StealthConfig } from './stealth.config.js';
 
 const log = { layer: ApplicationLayer.Data, method: 'browser' };
 
 let browser: Browser | null = null;
+let context: BrowserContext | null = null;
 
 export const BrowserClient = {
   async launch() {
     if (browser) return;
     logger.info({ ...log, message: `Launching browser (headless: ${Env.BROWSER_HEADLESS})` });
-    browser = await chromium.launch({ headless: Env.BROWSER_HEADLESS });
+    browser = await chromium.launch({
+      headless: Env.BROWSER_HEADLESS,
+      args: StealthConfig.launchArgs(),
+    });
+    await this.rotateContext();
+  },
+
+  async rotateContext() {
+    if (context) {
+      await context.close();
+      logger.info({ ...log, message: 'Rotated browser context' });
+    }
+    if (!browser) await this.launch();
+    context = await browser!.newContext(StealthConfig.contextOptions());
   },
 
   async newPage(): Promise<Page> {
-    if (!browser) await this.launch();
-    return browser!.newPage();
+    if (!context) await this.launch();
+    return context!.newPage();
   },
 
   async fetchPageContent(url: string): Promise<string> {
@@ -30,6 +45,10 @@ export const BrowserClient = {
   },
 
   async close() {
+    if (context) {
+      await context.close();
+      context = null;
+    }
     if (browser) {
       await browser.close();
       browser = null;
