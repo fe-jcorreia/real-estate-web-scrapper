@@ -1,0 +1,43 @@
+name: Test
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - "release/**"
+      - main-v4
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run prisma codegen
+        run: npm run db:codegen --workspace=@repo/db
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Setting database
+        run: docker compose up -d && sleep 10
+
+      - name: Syncpack
+        run: npm run packages:check
+
+      - name: Migrate test DB
+        run: npm run migrate:generate --skip-generate
+
+      - name: Running tests
+        run: npm run test

@@ -1,0 +1,41 @@
+{
+  "name": "@repo/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist/",
+    "db:codegen": "prisma generate --schema schema.prisma",
+    "dev": "tsc --watch",
+    "migrate:deploy": "npm_config_yes=true dotenv -e test.env prisma migrate deploy --schema schema.prisma",
+    "migrate:generate": "dotenv -e test.env -- prisma migrate dev --schema schema.prisma",
+    "migrate:reset": "dotenv -e test.env -- prisma migrate reset --schema schema.prisma -f",
+    "migrate:sync": "dotenv -e test.env -- prisma db push --schema schema.prisma",
+    "postinstall": "npm run db:codegen"
+  },
+  "dependencies": {
+    "nanoid": "5.0.9",
+    "@prisma/client": "6.9.0",
+    "prisma": "6.9.0"
+  },
+  "devDependencies": {
+    "dotenv-cli": "7.4.2",
+    "typescript": "5.8.3"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build"]
+    },
+    "db:codegen": {
+      "cache": false
+    },
+    "migrate:deploy": {
+      "cache": false
+    },
+    "migrate:generate": {
+      "cache": false
+    },
+    "migrate:reset": {
+      "cache": false
+    },
+    "migrate:sync": {
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": []
+    },
+    "test": {
+      "outputs": ["coverage/**"],
+      "dependsOn": []
+    },
+    "//#lint": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

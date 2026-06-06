@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "EsNext",
+    "module": "NodeNext",
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "useUnknownInCatchVariables": false,
+    "outDir": "dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "moduleDetection": "force",
+    "strict": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUncheckedIndexedAccess": true
+  }
+}

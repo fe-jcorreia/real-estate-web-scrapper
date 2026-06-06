@@ -1,4 +1,33 @@
-node_modules/
-dist/
-.env
+# Logs
+logs
 *.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+#DS
+.DS_Store
+
+# Visual Studio Code
+!.vscode/launch.json
+.vscode
+
+# Turborepo
+.turbo
+
+# Compilations
+apps/*/dist/
+packages/*/dist/
+rest-server-pruned/
+graphql-server-pruned/
+
+# Env files
+apps/*/.env
+packages/*/.env

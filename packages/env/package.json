@@ -1,0 +1,22 @@
+{
+  "name": "@repo/env",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "files": ["dist"],
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist/"
+  },
+  "dependencies": {
+    "dotenv": "16.5.0",
+    "typescript": "5.8.3",
+    "zod": "4.0.5"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  }
+}

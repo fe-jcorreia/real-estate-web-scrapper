@@ -1,0 +1,53 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
+  "files": {
+    "ignore": ["**/node_modules/*", "**/dist/*", "**/static/*", "**/generated/*", "**/cache/*"]
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noUselessTypeConstraint": "off",
+        "noForEach": "off",
+        "noStaticOnlyClass": "off",
+        "noExtraBooleanCast": "off",
+        "noBannedTypes": "warn"
+      },
+      "suspicious": {
+        "noConsoleLog": "warn",
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useImportType": "warn",
+        "noImplicitBoolean": "off",
+        "noParameterAssign": "off",
+        "noUselessElse": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "bracketSameLine": true,
+      "bracketSpacing": true,
+      "trailingCommas": "all",
+      "arrowParentheses": "asNeeded"
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "ignore": [],
+    "lineEnding": "lf"
+  }
+}

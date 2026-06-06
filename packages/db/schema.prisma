@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserEntity {
+  id         String    @unique @map("external_id")
+  internalId Int       @id @default(autoincrement()) @map("id")
+  email      String    @unique @db.VarChar
+  name       String    @db.VarChar
+  password   String?   @db.VarChar
+  salt       String    @db.VarChar
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime  @default(now()) @map("updated_at") @db.Timestamp(6)
+  deletedAt  DateTime? @map("deleted_at") @db.Timestamp(6)
+
+  @@map("user")
+}

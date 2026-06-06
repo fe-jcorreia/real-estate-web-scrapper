@@ -1,0 +1,15 @@
+{
+  "extends": "@repo/tsconfig/base.tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ES2021",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node", "mocha"],
+    "declaration": true,
+    "declarationDir": "./dist",
+    "esModuleInterop": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

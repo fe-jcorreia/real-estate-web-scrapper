@@ -1,0 +1,4 @@
+# Compilations
+static/
+src/api/types/generated.d.ts
+dist/
