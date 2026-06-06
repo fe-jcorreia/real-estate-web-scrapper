@@ -10,7 +10,7 @@ export const ListingSchema = z.object({
   currency: z.string().max(10).optional(),
   propertyType: z.string().optional(),
   transactionType: z.string().optional(),
-  areaSqm: z.number().positive().optional(),
+  area: z.number().positive().optional(),
   bedrooms: z.number().int().min(0).optional(),
   bathrooms: z.number().int().min(0).optional(),
   parkingSpots: z.number().int().min(0).optional(),

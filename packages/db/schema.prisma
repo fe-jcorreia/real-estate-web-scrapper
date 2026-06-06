@@ -22,9 +22,9 @@ model ListingEntity {
   propertyType    String? @map("property_type") @db.VarChar(50)
   transactionType String? @map("transaction_type") @db.VarChar(20)
 
-  areaSqm     Float? @map("area_sqm")
-  bedrooms    Int?
-  bathrooms   Int?
+  area         Float?
+  bedrooms     Int?
+  bathrooms    Int?
   parkingSpots Int?  @map("parking_spots")
 
   address      String? @db.VarChar(500)

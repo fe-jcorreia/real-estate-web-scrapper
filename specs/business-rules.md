@@ -32,4 +32,4 @@
 ## Data Model
 
 Required listing fields: `source`, `sourceId`, `url`, `title`
-Optional fields: `price`, `areaSqm`, `bedrooms`, `bathrooms`, `parkingSpots`, `address`, `neighborhood`, `city`, `state`, `zipCode`, `latitude`, `longitude`, `description`, `propertyType`, `transactionType`, `rawData`
+Optional fields: `price`, `area`, `bedrooms`, `bathrooms`, `parkingSpots`, `address`, `neighborhood`, `city`, `state`, `zipCode`, `latitude`, `longitude`, `description`, `propertyType`, `transactionType`, `rawData`
