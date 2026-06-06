@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Bash(git *)",
+      "WebFetch(domain:www.quintoandar.com.br)",
+      "WebFetch(domain:www.scraperapi.com)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npx turbo *)",
+      "Bash(npx prisma *)",
+      "WebFetch(domain:www.prisma.io)"
     ]
   }
 }
