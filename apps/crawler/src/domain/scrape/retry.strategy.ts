@@ -42,7 +42,7 @@ export function detectBlockReason(error: unknown): BlockReason {
   if (lower.includes('captcha') || lower.includes('challenge') || lower.includes('recaptcha')) {
     return 'captcha';
   }
-  if (lower.includes('timeout') || lower.includes('navigation timeout') || lower.includes('timed out')) {
+  if (lower.includes('408') || lower.includes('timeout') || lower.includes('timed out')) {
     return 'timeout';
   }
   return 'unknown';
